@@ -1,0 +1,20 @@
+[tool.poetry]
+authors = ["Joel Collins <pypi@jtcollins.net>"]
+description = ""
+name = "archmd"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+typer = "^0.3.2"
+
+[tool.poetry.dev-dependencies]
+black = {version = "^20.8b1", allow-prereleases = true}
+pytest = "^5.2"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.poetry.scripts]
+archmd = 'archmd:app'
