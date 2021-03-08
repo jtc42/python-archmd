@@ -101,7 +101,7 @@ def _build_doc_dict(
 
 
 def _make_toc_entry(title: str, level: int, link: str):
-    return f"{'  ' * (level)}* [{title}](#{link})\n"
+    return f"{'  ' * (level)}- [{title}](#{link})\n"
 
 
 def _traverse_readmes(root: str, fname: str, includeroot: bool, title: str) -> str:
@@ -114,7 +114,7 @@ def _traverse_readmes(root: str, fname: str, includeroot: bool, title: str) -> s
     for key, section in doc_dict.items():
         if key != root:
             anchorname: str = key.strip(".").strip("/").replace("/", "-")
-            body += f'\n<a name="{anchorname}"></a>\n{section.body}'
+            body += f'\n<a name="{anchorname}"></a>\n\n{section.body}'
             toc += _make_toc_entry(section.title, section.level - 1, anchorname)
 
     return header + toc + body
