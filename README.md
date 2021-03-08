@@ -1,6 +1,10 @@
 # Python-Arch.md
 
+This utility generates an ARCHITECTURE.md file for your project by searching through your project directories for README files, combining them into a single overview of your project structure.
+
 ## Installation
+
+`pipx install archmd`
 
 ## Basic usage
 
