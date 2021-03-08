@@ -125,11 +125,11 @@ app = typer.Typer()
 
 @app.command()
 def main(
-    path: str,
-    readme: str = typer.Option("README.md"),
-    includeroot: bool = typer.Option(False),
-    out: str = typer.Option(""),
-    title: str = typer.Option("Project Root"),
+    path: str = typer.Argument(..., help="Input directory"),
+    readme: str = typer.Option("README.md", help="Readme file name"),
+    includeroot: bool = typer.Option(False, help="Include root readme in output"),
+    out: str = typer.Option("", help="Output file path. Outputs to stdout if empty."),
+    title: str = typer.Option("Project Root", help="Output file title"),
 ):
     output: str = _traverse_readmes(path, readme, includeroot, title)
     if out:

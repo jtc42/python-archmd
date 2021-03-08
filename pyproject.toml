@@ -1,6 +1,6 @@
 [tool.poetry]
 authors = ["Joel Collins <pypi@jtcollins.net>"]
-description = ""
+description = "A simple command line utility to build an architecture.md file"
 name = "archmd"
 version = "0.1.0"
 
