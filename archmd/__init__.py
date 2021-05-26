@@ -113,9 +113,11 @@ def _traverse_readmes(root: str, fname: str, includeroot: bool, title: str) -> s
 
     for key, section in doc_dict.items():
         if key != root:
-            anchorname: str = key.strip(".").strip("/").replace("/", "-")
+            anchorlabel: str = key.strip(".").strip("/")
+            anchorname: str = anchorlabel.replace("/", "-")
+            
             body += f'\n<a name="{anchorname}"></a>\n\n{section.body}'
-            toc += _make_toc_entry(section.title, section.level - 1, anchorname)
+            toc += _make_toc_entry(anchorlabel, section.level - 1, anchorname)
 
     return header + toc + body
 
