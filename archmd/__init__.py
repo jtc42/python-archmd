@@ -9,6 +9,7 @@ from dataclasses import dataclass
 
 logging.basicConfig()
 
+
 class BadHeading(ValueError):
     pass
 
@@ -66,13 +67,13 @@ def _reformat_readme(input: str, level: int):
     return out
 
 
-def _create_parents(output: OrderedDict, directory_path:str, root_directory: str):
+def _create_parents(output: OrderedDict, directory_path: str, root_directory: str):
     relative_path = os.path.relpath(directory_path, root_directory)
     relative_path_split = relative_path.split("/")
-    
+
     for i, _ in enumerate(relative_path_split):
         parent_relative_path: str = "/".join(relative_path_split[:i])
-        
+
         parent_absolute_path: str = os.path.join(root_directory, parent_relative_path)
 
         if parent_relative_path and (parent_absolute_path not in output):
@@ -89,9 +90,11 @@ def _create_parents(output: OrderedDict, directory_path:str, root_directory: str
                 relative_path_split[-1].upper(),
             )
 
+
 def _get_absolute_path_level(dir_path: str) -> int:
     dir_list: List[str] = dir_path.split("/")
     return len(dir_list)
+
 
 def _build_doc_dict(
     root_directory: str, readme_filename: str, include_root: bool, title: str
@@ -108,10 +111,16 @@ def _build_doc_dict(
 
         # Calculate path level relative to root (starting at 1 for the root)
         path_level = _get_absolute_path_level(directory_path) - root_path_level + 1
-        logging.debug("Operating in path %s at path level %i", directory_path, path_level)
+        logging.debug(
+            "Operating in path %s at path level %i", directory_path, path_level
+        )
 
         # Skip root if includeroot is false, or part of the path is a dotfile
-        if directory_path == root_directory and not include_root and not _is_dotfile(directory_path):
+        if (
+            directory_path == root_directory
+            and not include_root
+            and not _is_dotfile(directory_path)
+        ):
             pass
 
         else:
@@ -138,7 +147,9 @@ def _make_toc_entry(title: str, level: int, link: str):
 
 
 def _traverse_readmes(root: str, fname: str, includeroot: bool, title: str) -> str:
-    doc_dict: OrderedDict[str, ArchSection] = _build_doc_dict(root, fname, includeroot, title)
+    doc_dict: OrderedDict[str, ArchSection] = _build_doc_dict(
+        root, fname, includeroot, title
+    )
 
     header: str = doc_dict[root].body
     body: str = ""
@@ -148,7 +159,7 @@ def _traverse_readmes(root: str, fname: str, includeroot: bool, title: str) -> s
         if key != root:
             anchorlabel: str = section.relative_path.strip(".").strip("/")
             anchorname: str = anchorlabel.replace("/", "-")
-            
+
             body += f'\n<a name="{anchorname}"></a>\n\n{section.body}'
             toc += _make_toc_entry(anchorlabel, section.level, anchorname)
 
